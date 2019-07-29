@@ -10,9 +10,36 @@ import pyodbc
 # conn = pyodbc.connect(conn_str)
 
 conn = pyodbc.connect(dsn="my_driver")
-crsr = conn.execute("SELECT 123 AS n")
-row = crsr.fetchone()
-print(row)
+crsr = conn.cursor()
+# crsr = conn.execute("SELECT 123 AS n")
+# row = crsr.fetchone()
+# print(row)
+
+# Open and read the file as a single buffer
+script_path = '/Users/liyuan/Desktop/Docker-hw/create_banking_db.sql'
+fd = open(script_path, 'r')
+sql_script = fd.read()
+fd.close()
+
+# Get all SQL statements (split on ';')
+sql_statements = sql_script.split(';')
+
+# Execute SQL statements
+for statement in sql_statements:
+    if not statement.strip():
+        continue
+    crsr.execute(statement)
+    # logging.info(msg[5] + ' %s' % str(statement) + '\n')
+    print('Statement executed:'+ ' %s' % str(statement) + '\n')
+
+conn.commit()
 crsr.close()
 conn.close()
+
+
+
+
+
+
+
 

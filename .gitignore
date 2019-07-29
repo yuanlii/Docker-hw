@@ -1,2 +1,9 @@
+# Environments
+venv/
+venv.bak/
 */venv/*
+
+# Secrets
+**/secrets.py
+
 .DS_Store
